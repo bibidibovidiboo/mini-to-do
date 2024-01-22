@@ -1,19 +1,46 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { MdAdd } from 'react-icons/md';
+import { v4 as uuidv4 } from 'uuid';
+import { useSetRecoilState } from 'recoil';
+import todoListState from 'src/store/atoms';
 
 const TodoCreate = () => {
   const [open, setOpen] = useState(false);
+  const [value, setValue] = useState<string>('');
+  const setTodoList = useSetRecoilState(todoListState);
+
   const onToggle = () => setOpen(!open);
+
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+  };
+
+  const handleAdd = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (value.trim().length === 0) {
+      return;
+    }
+    setTodoList((prev) =>
+      prev.concat({
+        id: uuidv4(),
+        text: value,
+        done: false,
+      })
+    );
+    setValue('');
+  };
 
   return (
     <>
       {open && (
         <InsertFormPositioner>
-          <InsertForm>
+          <InsertForm onSubmit={handleAdd}>
             <Input
               autoFocus
+              value={value}
               placeholder='할 일을 입력 후 Enter 를 누르세요 😊'
+              onChange={handleChangeInput}
             />
           </InsertForm>
         </InsertFormPositioner>
