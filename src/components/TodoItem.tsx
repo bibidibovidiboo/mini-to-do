@@ -7,6 +7,24 @@ import todoListState from 'src/store/atoms';
 
 const TodoItem = ({ id, done, text }: Todo) => {
   const setTodoList = useSetRecoilState(todoListState);
+  const [value, setValue] = useState<string>(text);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+  };
+
+
+  const handleUpdate = (e: React.FormEvent<HTMLFormElement>, id?: string) => {
+    e.preventDefault();
+    if (value.trim().length === 0) {
+      return;
+    }
+    setTodoList((prev) =>
+      prev.map((todo) => (todo.id === id ? { ...todo, text: value } : todo))
+    );
+    inputRef.current?.blur();
+  };
 
   const handleDelete = (id?: string) => {
     setTodoList((prev) => prev.filter((todo) => todo.id !== id));
@@ -16,6 +34,18 @@ const TodoItem = ({ id, done, text }: Todo) => {
     <TodoItemBlock>
       <CheckCircle done={done}>{done && <MdDone />}</CheckCircle>
       <Text done={done}>{text}</Text>
+      <Form onSubmit={(e) => handleUpdate(e, id)}>
+        <Input
+          value={value}
+          ref={inputRef}
+          done={done}
+          onChange={handleChangeInput}
+          onMouseDown={(e) => e.preventDefault()}
+        />
+      </Form>
+      <Update onClick={() => inputRef.current?.focus()}>
+        <MdCreate />
+      </Update>
       <Remove onClick={() => handleDelete(id)}>
         <MdDelete />
       </Remove>
