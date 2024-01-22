@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { MdDone, MdDelete } from 'react-icons/md';
-import { TodoData } from '../model/todo';
+import { MdDone, MdCreate, MdDelete } from 'react-icons/md';
+import { Todo } from '../model/types';
+import { useSetRecoilState } from 'recoil';
+import todoListState from 'src/store/atoms';
 
-const TodoItem = ({ done, text }: TodoData) => {
+const TodoItem = ({ id, done, text }: Todo) => {
+  const setTodoList = useSetRecoilState(todoListState);
+
+  const handleDelete = (id?: string) => {
+    setTodoList((prev) => prev.filter((todo) => todo.id !== id));
+  };
+
   return (
     <TodoItemBlock>
       <CheckCircle done={done}>{done && <MdDone />}</CheckCircle>
       <Text done={done}>{text}</Text>
-      <Remove>
+      <Remove onClick={() => handleDelete(id)}>
         <MdDelete />
       </Remove>
     </TodoItemBlock>
