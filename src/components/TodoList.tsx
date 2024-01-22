@@ -1,12 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
 import TodoItem from './TodoItem';
+import { useRecoilValue } from 'recoil';
+import todoListState from 'src/store/atoms';
 
 const TodoList = () => {
+  const TodoList = useRecoilValue(todoListState);
+
   return (
     <TodoListBlock>
-      <TodoItem text='프로젝트 생성하기' done={true} />
-      <TodoItem text='컴포넌트 스타일링' done={false} />
+      {TodoList.map((todo) => {
+        return (
+          <TodoItem
+            key={todo.id}
+            id={todo.id}
+            text={todo.text}
+            done={todo.done}
+          />
+        );
+      })}
     </TodoListBlock>
   );
 };
