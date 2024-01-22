@@ -39,6 +39,8 @@ const Update = styled.div`
 `;
 
 const Remove = styled.div`
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -48,7 +50,6 @@ const Remove = styled.div`
   &:hover {
     color: #ff6b6b;
   }
-  display: none;
 `;
 
 const TodoItemBlock = styled.div`
