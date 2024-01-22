@@ -83,10 +83,17 @@ const CheckCircle = styled.div<{ done: boolean }>`
     `}
 `;
 
-const Text = styled.div<{ done: boolean }>`
+const Form = styled.form`
+  display: contents;
+  text-decoration-line: none;
+`;
+
+const Input = styled.input<{ done: boolean }>`
   flex: 1;
   font-size: 21px;
   color: #495057;
+  border: none;
+  outline: none;
   ${(props) =>
     props.done &&
     css`
