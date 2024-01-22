@@ -14,6 +14,11 @@ const TodoItem = ({ id, done, text }: Todo) => {
     setValue(e.target.value);
   };
 
+  const handleCheck = (id?: string) => {
+    setTodoList((prev) =>
+      prev.map((todo) => (todo.id === id ? { ...todo, done: !done } : todo))
+    );
+  };
 
   const handleUpdate = (e: React.FormEvent<HTMLFormElement>, id?: string) => {
     e.preventDefault();
@@ -32,8 +37,9 @@ const TodoItem = ({ id, done, text }: Todo) => {
 
   return (
     <TodoItemBlock>
-      <CheckCircle done={done}>{done && <MdDone />}</CheckCircle>
-      <Text done={done}>{text}</Text>
+      <CheckCircle done={done} onClick={() => handleCheck(id)}>
+        {done && <MdDone />}
+      </CheckCircle>
       <Form onSubmit={(e) => handleUpdate(e, id)}>
         <Input
           value={value}
