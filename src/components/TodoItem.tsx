@@ -17,6 +17,19 @@ const TodoItem = ({ done, text }: TodoData) => {
 
 export default TodoItem;
 
+const Update = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+  color: #dee2e6;
+  font-size: 24px;
+  cursor: pointer;
+  &:hover {
+    color: #38d9a9;
+  }
+`;
+
 const Remove = styled.div`
   display: flex;
   align-items: center;
