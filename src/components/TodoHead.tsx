@@ -1,12 +1,25 @@
 import React from 'react';
+import { useRecoilValue } from 'recoil';
+import todoListState from 'src/store/atoms';
 import styled from 'styled-components';
 
 const TodoHead = () => {
+  const todoList = useRecoilValue(todoListState);
+  const undoneTasks = todoList.filter((todo) => todo.done === false);
+
+  const today = new Date();
+  const dayName = today.toLocaleDateString('ko-KR', { weekday: 'long' });
+  const dateString = today.toLocaleDateString('ko-KR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
   return (
     <TodoHeadBlock>
-      <h1>2024년 1월 18일</h1>
-      <div className='day'>목요일</div>
-      <div className='tasks-left'>할 일 1개 남음</div>
+      <h1>{dateString}</h1>
+      <div className='day'>{dayName}</div>
+      <div className='tasks-left'>할 일 {undoneTasks.length}개 남음</div>
     </TodoHeadBlock>
   );
 };
