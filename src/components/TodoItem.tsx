@@ -37,14 +37,14 @@ const TodoItem = ({ id, done, text }: Todo) => {
 
   return (
     <TodoItemBlock>
-      <CheckCircle done={done} onClick={() => handleCheck(id)}>
+      <CheckCircle $done={done} onClick={() => handleCheck(id)}>
         {done && <MdDone />}
       </CheckCircle>
       <Form onSubmit={(e) => handleUpdate(e, id)}>
         <Input
           value={value}
           ref={inputRef}
-          done={done}
+          $done={done}
           onChange={handleChangeInput}
           onMouseDown={(e) => e.preventDefault()}
         />
@@ -100,7 +100,7 @@ const TodoItemBlock = styled.div`
   }
 `;
 
-const CheckCircle = styled.div<{ done: boolean }>`
+const CheckCircle = styled.div<{ $done: boolean }>`
   width: 32px;
   height: 32px;
   border-radius: 16px;
@@ -112,7 +112,7 @@ const CheckCircle = styled.div<{ done: boolean }>`
   margin-right: 20px;
   cursor: pointer;
   ${(props) =>
-    props.done &&
+    props.$done &&
     css`
       border: 1px solid #38d9a9;
       color: #38d9a9;
@@ -124,14 +124,14 @@ const Form = styled.form`
   text-decoration-line: none;
 `;
 
-const Input = styled.input<{ done: boolean }>`
+const Input = styled.input<{ $done: boolean }>`
   flex: 1;
   font-size: 21px;
   color: #495057;
   border: none;
   outline: none;
   ${(props) =>
-    props.done &&
+    props.$done &&
     css`
       color: #ced4da;
     `}
